@@ -1,14 +1,28 @@
 { lib, stdenv, fetchzip, autoPatchelfHook }:
 
-stdenv.mkDerivation {
+let
+  sources = {
+    x86_64-linux = {
+      url =
+        "https://github.com/clangd/clangd/releases/download/snapshot_20250621/clangd-linux-snapshot_20250621.zip";
+      hash = "sha256-UC+Em6FUkkEL7zh2L7rEZbeN0UVIhbrx5gnJ+mgwJU4=";
+    };
+    x86_64-darwin = {
+      url =
+        "https://github.com/clangd/clangd/releases/download/snapshot_20250621/clangd-mac-snapshot_20250621.zip";
+      hash = "sha256-a3fBlrsuURUGW86rxYM84Y4BOGI52TcUE+HtEdLDazI=";
+    };
+    aarch64-darwin = {
+      url =
+        "https://github.com/clangd/clangd/releases/download/snapshot_20250621/clangd-mac-snapshot_20250621.zip";
+      hash = "sha256-a3fBlrsuURUGW86rxYM84Y4BOGI52TcUE+HtEdLDazI=";
+    };
+  };
+in stdenv.mkDerivation {
   pname = "clangd";
   version = "21-init";
 
-  src = fetchzip {
-    url =
-      "https://github.com/clangd/clangd/releases/download/snapshot_20250621/clangd-linux-snapshot_20250621.zip";
-    hash = "sha256-UC+Em6FUkkEL7zh2L7rEZbeN0UVIhbrx5gnJ+mgwJU4=";
-  };
+  src = fetchzip sources.${stdenv.hostPlatform.system};
 
   nativeBuildInputs = [ autoPatchelfHook ];
 
@@ -38,7 +52,7 @@ stdenv.mkDerivation {
     homepage = "https://clangd.llvm.org/";
     license = licenses.llvm-exception;
     maintainers = "Lasse Krarup";
-    platforms = platforms.linux;
+    platforms = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
     mainProgram = "clangd";
   };
 }
