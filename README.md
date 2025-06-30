@@ -1,4 +1,6 @@
-# Clangd 21-init pre-release for Nix
+# Clangd 21-init pre-release for Nix (ARCHIVED AND MOVED)
+
+**This package has moved to [LasseKrarup/nix-custompkgs](https://github.com/LasseKrarup/nix-custompkgs)**
 
 This is a Nix package containing a pre-release of `clangd` version "21-init" / "21.0.0.git".
 
